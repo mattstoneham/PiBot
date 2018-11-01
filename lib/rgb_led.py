@@ -13,7 +13,7 @@ YELLOW = [50, 50, 0]
 PURPLE = [50, 0, 50]
 CYAN = [0, 50, 50]
 
-class Squid:
+class RGBLed:
 
     RED_PIN = 0
     GREEN_PIN = 0
