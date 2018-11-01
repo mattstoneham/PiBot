@@ -4,7 +4,7 @@ __author__ = 'Matt'
 import RPi.GPIO as GPIO
 import time
 
-WHITE = [30, 30, 30]
+WHITE = [80, 40, 80]
 OFF = [0, 0, 0]
 RED = [100, 0, 0]
 GREEN = [0, 100, 0]
