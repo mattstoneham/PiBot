@@ -23,7 +23,7 @@ class ColourSensor(object):
     
         GPIO.output(self.s2,GPIO.LOW)
         GPIO.output(self.s3,GPIO.LOW)
-        time.sleep(0.3)
+        #time.sleep(0.3)
         start = time.time()
         for impulse_count in range(self.NUM_CYCLES):
             GPIO.wait_for_edge(self.signal, GPIO.FALLING)
@@ -33,7 +33,7 @@ class ColourSensor(object):
     
         GPIO.output(self.s2,GPIO.LOW)
         GPIO.output(self.s3,GPIO.HIGH)
-        time.sleep(0.3)
+        #time.sleep(0.3)
         start = time.time()
         for impulse_count in range(self.NUM_CYCLES):
             GPIO.wait_for_edge(self.signal, GPIO.FALLING)
@@ -43,7 +43,7 @@ class ColourSensor(object):
     
         GPIO.output(self.s2,GPIO.HIGH)
         GPIO.output(self.s3,GPIO.HIGH)
-        time.sleep(0.3)
+        #time.sleep(0.3)
         start = time.time()
         for impulse_count in range(self.NUM_CYCLES):
             GPIO.wait_for_edge(self.signal, GPIO.FALLING)
