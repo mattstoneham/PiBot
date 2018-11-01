@@ -11,7 +11,10 @@ class ColourSensor(object):
     signal = 21
     NUM_CYCLES = 10
   
-    def __init__(self):
+    def __init__(self, s2=20, s3=16, signal=21):
+        self.s2 = s2
+        self.s3 = s3
+        self.signal = signal
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.signal,GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(self.s2,GPIO.OUT)

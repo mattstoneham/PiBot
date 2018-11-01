@@ -23,7 +23,7 @@ class RGBLed:
     green_pwm = 0
     blue_pwm = 0
 
-    def __init__(self, red_pin, green_pin, blue_pin):
+    def __init__(self, red_pin=18, green_pin=23, blue_pin=24):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         self.RED_PIN, self.GREEN_PIN, self.BLUE_PIN = red_pin, green_pin, blue_pin
