@@ -33,7 +33,7 @@ def main():
         elif rgbdict['red']<2200 and  rgbdict['blue']<2800 and rgbdict['green']>2900:
             print("--GREEN--")
             temp=1
-        elif rgbdict['green']<3700 and rgbdict['red']<2500 and rgbdict['blue']>79000 and percentage >20:
+        elif rgbdict['green']<4000 and rgbdict['red']<2600 and rgbdict['blue']>8400 and percentage >20:
             print("--BLUE--")
             temp=1
         elif rgbdict['red']>10000 and rgbdict['green']>10000 and rgbdict['blue']>10000:
