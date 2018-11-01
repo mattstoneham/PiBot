@@ -87,8 +87,8 @@ class Colourdetection(object):
 
 
 
-        def endprogram(self):
-            GPIO.cleanup()
+    def endprogram(self):
+        GPIO.cleanup()
 
 if __name__=='__main__':
 
