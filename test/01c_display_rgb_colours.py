@@ -1,5 +1,4 @@
 __author__ = 'Matt'
-__author__ = 'Matt'
 
 
 from PiBot.lib.colour_sensor import ColourSensor
