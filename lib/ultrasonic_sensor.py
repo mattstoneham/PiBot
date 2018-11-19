@@ -12,6 +12,8 @@ class UltraSonicSensor(object):
     def __init__(self, trigger=18, echo=23):
         self.TRIGGER_PIN = trigger
         self.ECHO_PIN = echo
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.setup(self.TRIGGER_PIN, GPIO.OUT)
         GPIO.setup(self.ECHO_PIN, GPIO.IN)
 
