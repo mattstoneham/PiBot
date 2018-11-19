@@ -5,6 +5,9 @@ import time
 import sys
 import signal
 
+import RPi.GPIO as GPIO
+from PiBot.lib.colour_sensor import ColourSensor
+
 class MyClass(object):
 
     exitFlag = 0
@@ -13,27 +16,37 @@ class MyClass(object):
     name = ''
     thread1 = ''
 
+    RGBsensor = {}
+
     class SensorThread(threading.Thread):
         def __init__(self, threadID, name):
             threading.Thread.__init__(self)
             self.threadID = threadID
             self.name = name
 
+
         def run(self):
             print("Starting " + self.name)
+            #MyClass().test_getsensorvalue(MyClass)
             MyClass().getsensorvalue(MyClass)
             print("Exiting " + self.name)
 
         def exit(self):
             MyClass.exitFlag = 1
 
+    def test_getsensorvalue(self, newself):
+        while not newself.exitFlag:
+            time.sleep(0.0001)
+            newself.value += 1
+            if newself.value > 9999:
+                newself.exitFlag = 1
+            #print('self.value: {0}'.format(newself.value))
 
     def getsensorvalue(self, newself):
+        myColourSensor = ColourSensor()
         while not newself.exitFlag:
-            newself.value += 1
-            if newself.value > 4999:
-                newself.exitFlag = 1
-            print('self.value: {0}'.format(newself.value))
+            time.sleep(0.0001)
+            newself.RGBsensor = myColourSensor.get_rgb_values()
 
 
     def run(self):
@@ -44,7 +57,8 @@ class MyClass(object):
 
 
         while not self.exitFlag:
-            print('Hello there self.value of {0}'.format(self.value))
+            #print('Hello there self.value of {0}'.format(self.value))
+            print('RGB {0}'.format(self.RGBsensor))
 
 
 
