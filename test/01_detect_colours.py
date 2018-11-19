@@ -1,6 +1,6 @@
 __author__ = 'Matt'
 
-
+import RPi.GPIO as GPIO
 from PiBot.lib.colour_sensor import ColourSensor
 import time
 
@@ -45,5 +45,8 @@ def main():
         time.sleep(1)
 
 if __name__=='__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 

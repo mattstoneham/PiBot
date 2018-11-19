@@ -53,5 +53,8 @@ def main():
         time.sleep(1)
 
 if __name__=='__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
