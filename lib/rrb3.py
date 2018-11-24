@@ -48,7 +48,6 @@ class RRB3:
         GPIO.setup(self.LEFT_1_PIN, GPIO.OUT)
         GPIO.setup(self.LEFT_2_PIN, GPIO.OUT)
 
-        GPIO.setup(self.RIGHT_PWM_PIN, GPIO.OUT)
         self.right_pwm = GPIO.PWM(self.RIGHT_PWM_PIN, 500)
         self.right_pwm.start(0)
         GPIO.setup(self.RIGHT_1_PIN, GPIO.OUT)
