@@ -11,6 +11,7 @@ from PiBot.lib.rrb3 import *
 
 
 
+
 class MyClass(object):
 
     exitFlag = 0
@@ -53,6 +54,31 @@ class MyClass(object):
         while not newself.exitFlag:
             time.sleep(0.1)
             newself.RGBvalues = myColourSensor.get_rgb_values()
+            total = newself.RGBvalues['red'] + newself.RGBvalues['green'] + newself.RGBvalues['blue']
+            if total > newself.maximum:
+                print('Auto calibrated max intensity')
+                newself.maximum = total
+            if total < newself.minimum:
+                print('Auto calibrated min intensity')
+                newself.minimum = total
+            newself.percentage = (100 / (newself.maximum - newself.minimum)) * (total - newself.minimum)
+            #print("Light percent: {0}".format(percentage))
+
+            if newself.RGBvalues['green']<3000 and newself.RGBvalues['blue']<4200 and newself.RGBvalues['red']>8000:
+                newself.colour = 'RED'
+                #print("--RED--")
+            elif newself.RGBvalues['red']<2200 and  newself.RGBvalues['blue']<2800 and newself.RGBvalues['green']>2900:#
+                newself.colour = 'GREEN'
+                #print("--GREEN--")
+            elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400 and newself.percentage >20:
+                newself.colour = 'BLUE'
+                #print("--BLUE--")
+            elif newself.RGBvalues['red']>10000 and newself.RGBvalues['green']>10000 and newself.RGBvalues['blue']>10000:
+                newself.colour = 'WHITE'
+                #print("--WHITE--")
+            elif newself.RGBvalues['red']<2000 and newself.RGBvalues['green']<2000 and newself.RGBvalues['blue']<2000:
+                newself.colour = 'BLACK'
+                #print("--BLACK--")
 
 
     def findcolour(self):
@@ -108,10 +134,19 @@ class MyClass(object):
 
             # Control our bot based on sensor values here!
 
-            self.findcolour()
+            #self.findcolour()
             print('\nRGB Colour: {0}\tLight percent: {1}'.format(self.colour, self.percentage))
             print('\nDistance {0}\n'.format(self.distance))
-            time.sleep(1)
+            if self.colour == None:
+                print('Looking for the line (unspecified colour)')
+            
+            if self.colour == 'BLACK':
+                print('Looking for the line')
+                
+                
+            if self.colour == 'WHITE':
+                print('Following the line')
+                #RRB3.forward(speed=0.5)
 
 
 
@@ -125,6 +160,7 @@ if __name__ == '__main__':
     def shutdown(sig=None, frame=None):
         for thread in cl.threads:
             thread.exit()
+        RRB3.stop()
         sys.exit(0)
 
 
