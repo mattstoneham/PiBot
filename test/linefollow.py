@@ -51,7 +51,7 @@ class MyClass(object):
     def getRGBsensorvalue(self, newself, updatefreq):
         myColourSensor = ColourSensor()
         while not newself.exitFlag:
-            time.sleep(updatefreq)
+            time.sleep(0.1)
             newself.RGBvalues = myColourSensor.get_rgb_values()
 
 
