@@ -82,9 +82,7 @@ if __name__ == '__main__':
 
     def shutdown(sig, frame):
         for thread in cl.threads:
-            print('Stopping thread: {0}'.format(thread))
             thread.exit()
-            print('\tdone!')
         sys.exit(0)
 
 

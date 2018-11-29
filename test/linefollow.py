@@ -118,13 +118,15 @@ class MyClass(object):
 if __name__ == '__main__':
     cl = MyClass()
 
-    def shutdown(sig, frame):
+    def shutdown(sig=None, frame=None):
         for thread in cl.threads:
-            print('Stopping thread: {0}'.format(thread))
             thread.exit()
-            print('\tdone!')
         sys.exit(0)
 
 
     signal.signal(signal.SIGINT, shutdown)
-    cl.run()
+    try:
+        cl.run()
+    except:
+        print('Exception triggered, shutting down threads')
+        shutdown()
