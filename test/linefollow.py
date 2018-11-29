@@ -113,6 +113,8 @@ class MyClass(object):
             elif self.RGBvalues['red']<2000 and self.RGBvalues['green']<2000 and self.RGBvalues['blue']<2000:
                 self.colour = 'BLACK'
                 #print("--BLACK--")
+            else:
+                self.colour = None
         except:
             print('No RGB sensor values yet!')
     
@@ -146,7 +148,7 @@ class MyClass(object):
                 
             if self.colour == 'WHITE':
                 print('Following the line')
-                #RRB3.forward(speed=0.5)
+                #rrb3.forward(speed=0.5)
 
 
 
@@ -156,11 +158,12 @@ class MyClass(object):
 
 if __name__ == '__main__':
     cl = MyClass()
+    rrb3 = RRB3()
 
     def shutdown(sig=None, frame=None):
         for thread in cl.threads:
             thread.exit()
-        RRB3.stop()
+        rrb3.stop()
         sys.exit(0)
 
 
