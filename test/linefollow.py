@@ -104,7 +104,7 @@ class MyClass(object):
 
             # Control our bot based on sensor values here!
 
-            #print('\nRGB {0}'.format(self.RGBsensor))
+            #print('\nRGB {0}'.format(self.RGBvalues))
             self.findcolour()
             print('\nDistance {0}\n'.format(self.distance))
             time.sleep(1)
@@ -127,6 +127,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, shutdown)
     try:
         cl.run()
-    except:
+    except Exception as e:
+        print(e)
         print('Exception triggered, shutting down threads')
         shutdown()
