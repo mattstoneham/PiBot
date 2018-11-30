@@ -100,20 +100,18 @@ class MyClass(object):
 
 
         while not self.exitFlag:
-
+            this_colour = self.colour
             # Control our bot based on sensor values here!
 
             #self.findcolour()
-            print('\n\nRGB Colour: {0}  Light percent: {1}'.format(self.colour, self.percentage))
-            print('Distance {0}\n'.format(self.distance))
-            if self.colour == None:
-                print('Looking for the line (unspecified colour)')
+            #print('\n\nRGB Colour: {0}  Light percent: {1}'.format(this_colour, self.percentage))
+            #print('Distance {0}\n'.format(self.distance))
 
-            if self.colour == 'BLACK':
+            if this_colour == 'BLACK':
                 print('Arc right')
                 rrb3.arc(direction=0, l_speed=0.3, r_speed=0)
 
-            if self.colour == 'WHITE':
+            if this_colour == 'WHITE':
                 print('Arc left')
                 rrb3.arc(direction=0, l_speed=0, r_speed=0.3)
 

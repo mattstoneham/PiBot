@@ -76,10 +76,10 @@ class MyClass(object):
             elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400:
                 newself.colour = 'BLUE'
                 #print("--BLUE--")
-            elif newself.RGBvalues['red']>8000 and newself.RGBvalues['green']>8000 and newself.RGBvalues['blue']>8000:
+            elif newself.RGBvalues['red']>9000 and newself.RGBvalues['green']>9000 and newself.RGBvalues['blue']>9000:
                 newself.colour = 'WHITE'
                 #print("--WHITE--")
-            elif newself.RGBvalues['red']<2000 and newself.RGBvalues['green']<2000 and newself.RGBvalues['blue']<2000:
+            elif newself.RGBvalues['red']<7000 and newself.RGBvalues['green']<7000 and newself.RGBvalues['blue']<7000:
                 newself.colour = 'BLACK'
                 #print("--BLACK--")
 
@@ -101,32 +101,28 @@ class MyClass(object):
             print('\tdone!')
 
         last_colour = '' # stores last colour, so we can tell if the sensor readout has changed over the frame
-        search_init_time = 0 # stores time when search for line initialised, enables implementation of search patterns
+        search_init_time = time.time() # stores time when search for line initialised, enables implementation of search patterns
 
         this_direction = 'right' # store current search rotation direction
         max_searchtime = 1
 
         while not self.exitFlag:
-
+            this_colour = self.colour
             # Control our bot based on sensor values here!
 
 
-            if not self.colour == last_colour and self.colour == 'BLACK':
+            if not this_colour == last_colour and this_colour == 'WHITE':
                 # lost the line, store time the line search was initialised
-                print('Line search time init: {0}'.format(search_init_time))
+                #print('Line search time init: {0}'.format(search_init_time))
                 search_init_time = time.time()
 
 
             #self.findcolour()
-            print('\n\nRGB Colour: {0}  Light percent: {1}'.format(self.colour, self.percentage))
-            print('Distance {0}\n'.format(self.distance))
-            if self.colour == None:
-                print('Looking for the line (unspecified colour)')
-
-            
-            if self.colour == 'WHITE':
+            #print('\n\nRGB Colour: {0}  Light percent: {1}'.format(this_colour, self.percentage))
+            #print('Distance {0}\n'.format(self.distance))
+            if this_colour == 'WHITE':
                 searchtime = time.time() - search_init_time
-                print('Looking for the line for {0} seconds'.format(searchtime))
+                print('Looking for {0} for {1} of {2} seconds'.format(this_direction, searchtime, max_searchtime))
                 if this_direction == 'left':
                     rrb3.left(speed=0.2)
                 if this_direction == 'right':
@@ -134,18 +130,19 @@ class MyClass(object):
 
                 # change search direction after 1, then 2, then 3 etc. seconds of searching
                 if searchtime > max_searchtime:
-                    max_searchtime += 1
+                    max_searchtime += 0.5
                     if this_direction == 'left':
                         this_direction = 'right'
                     else:
                         this_direction = 'left'
                 
-            if self.colour == 'BLACK':
+            if this_colour == 'BLACK':
                 print('Following the line')
                 rrb3.forward(speed=0.2)
+                max_searchtime = 1
 
 
-            last_colour = self.colour
+            last_colour = this_colour
 
 
 
