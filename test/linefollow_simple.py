@@ -111,12 +111,11 @@ class MyClass(object):
 
             if self.colour == 'BLACK':
                 print('Arc right')
-                rrb3.arc(direction=0, l_speed=0.3, r_speed=0.15)
+                rrb3.arc(direction=0, l_speed=0.3, r_speed=0)
 
             if self.colour == 'WHITE':
-                print('Searching for line')
-                rrb3.right(speed=0.18)
-                rrb3.arc(direction=0, l_speed=0.15, r_speed=0.3)
+                print('Arc left')
+                rrb3.arc(direction=0, l_speed=0, r_speed=0.3)
 
 
 
