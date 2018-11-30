@@ -61,7 +61,10 @@ class MyClass(object):
             if total < newself.minimum:
                 print('Auto calibrated min intensity')
                 newself.minimum = total
-            newself.percentage = (100 / (newself.maximum - newself.minimum)) * (total - newself.minimum)
+            try:
+                newself.percentage = (100 / (newself.maximum - newself.minimum)) * (total - newself.minimum)
+            except:
+                pass # handle potential divide by zero on start
             #print("Light percent: {0}".format(percentage))
 
             if newself.RGBvalues['green']<3000 and newself.RGBvalues['blue']<4200 and newself.RGBvalues['red']>8000:

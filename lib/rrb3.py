@@ -7,6 +7,9 @@ import time
 
 class RRB3:
 
+    LEFT_MOTOR_SCALE = 110
+    RIGHT_MOTOR_SCALE = 100
+
     MOTOR_DELAY = 0.2
 
     RIGHT_PWM_PIN = 14
@@ -87,7 +90,9 @@ class RRB3:
         GPIO.output(self.RIGHT_2_PIN, not right_dir)
 
     def forward(self, seconds=0, speed=1.0):
-        self.set_motors(speed, 0, speed, 0)
+        l_speed = (speed / 100) * self.LEFT_MOTOR_SCALE
+        r_speed = (speed / 100) * self.RIGHT_MOTOR_SCALE
+        self.set_motors(l_speed, 0, r_speed, 0)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
