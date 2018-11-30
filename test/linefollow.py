@@ -108,11 +108,11 @@ class MyClass(object):
             
             if self.colour == 'BLACK':
                 print('Looking for the line')
+                rrb3.right(speed=0.2)
                 
-                
-            if self.colour == 'WHITE':
+            if self.colour == 'BLACK':
                 print('Following the line')
-                rrb3.forward(speed=0.5)
+                rrb3.forward(speed=0.2)
 
 
 
