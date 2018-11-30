@@ -70,10 +70,10 @@ class MyClass(object):
             elif newself.RGBvalues['red']<2200 and  newself.RGBvalues['blue']<2800 and newself.RGBvalues['green']>2900:#
                 newself.colour = 'GREEN'
                 #print("--GREEN--")
-            elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400 and newself.percentage >20:
+            elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400:
                 newself.colour = 'BLUE'
                 #print("--BLUE--")
-            elif newself.RGBvalues['red']>10000 and newself.RGBvalues['green']>10000 and newself.RGBvalues['blue']>10000:
+            elif newself.RGBvalues['red']>8000 and newself.RGBvalues['green']>8000 and newself.RGBvalues['blue']>8000:
                 newself.colour = 'WHITE'
                 #print("--WHITE--")
             elif newself.RGBvalues['red']<2000 and newself.RGBvalues['green']<2000 and newself.RGBvalues['blue']<2000:
@@ -81,42 +81,6 @@ class MyClass(object):
                 #print("--BLACK--")
 
 
-    def findcolour(self):
-        try:
-            #print('Raw RGB values from sensor:')
-            #for key, value in self.RGBvalues.items():
-            #    print('\t'+key, value)
-            #print('\n')
-
-            total = self.RGBvalues['red'] + self.RGBvalues['green'] + self.RGBvalues['blue']
-            if total > self.maximum:
-                print('Auto calibrated max intensity')
-                self.maximum = total
-            if total < self.minimum:
-                print('Auto calibrated min intensity')
-                self.minimum = total
-            self.percentage = (100 / (self.maximum - self.minimum)) * (total - self.minimum)
-            #print("Light percent: {0}".format(percentage))
-
-            if self.RGBvalues['green']<3000 and self.RGBvalues['blue']<4200 and self.RGBvalues['red']>8000:
-                self.colour = 'RED'
-                #print("--RED--")
-            elif self.RGBvalues['red']<2200 and  self.RGBvalues['blue']<2800 and self.RGBvalues['green']>2900:#
-                self.colour = 'GREEN'
-                #print("--GREEN--")
-            elif self.RGBvalues['green']<4000 and self.RGBvalues['red']<2600 and self.RGBvalues['blue']>8400 and self.percentage >20:
-                self.colour = 'BLUE'
-                #print("--BLUE--")
-            elif self.RGBvalues['red']>10000 and self.RGBvalues['green']>10000 and self.RGBvalues['blue']>10000:
-                self.colour = 'WHITE'
-                #print("--WHITE--")
-            elif self.RGBvalues['red']<2000 and self.RGBvalues['green']<2000 and self.RGBvalues['blue']<2000:
-                self.colour = 'BLACK'
-                #print("--BLACK--")
-            else:
-                self.colour = None
-        except:
-            print('No RGB sensor values yet!')
     
     def run(self):
         # Create new threads
@@ -137,8 +101,8 @@ class MyClass(object):
             # Control our bot based on sensor values here!
 
             #self.findcolour()
-            print('\nRGB Colour: {0}\tLight percent: {1}'.format(self.colour, self.percentage))
-            print('\nDistance {0}\n'.format(self.distance))
+            print('\n\nRGB Colour: {0}  Light percent: {1}'.format(self.colour, self.percentage))
+            print('Distance {0}\n'.format(self.distance))
             if self.colour == None:
                 print('Looking for the line (unspecified colour)')
             
@@ -148,7 +112,7 @@ class MyClass(object):
                 
             if self.colour == 'WHITE':
                 print('Following the line')
-                #rrb3.forward(speed=0.5)
+                rrb3.forward(speed=0.5)
 
 
 
