@@ -83,6 +83,8 @@ class MyClass(object):
 
     
     def run(self):
+        import time
+
         # Create new threads
         # Create the RGB sensor thread
         self.threads.append(self.SensorThread('RGBSensorThread', 1, 'RGB', 0.5))
@@ -95,24 +97,52 @@ class MyClass(object):
             thread.start()
             print('\tdone!')
 
+        last_colour = '' # stores last colour, so we can tell if the sensor readout has changed over the frame
+        search_init_time = 0 # stores time when search for line initialised, enables implementation of search patterns
+
+        this_direction = 'right' # store current search rotation direction
+        max_searchtime = 1
 
         while not self.exitFlag:
 
             # Control our bot based on sensor values here!
+
+
+            if not self.colour == last_colour and self.colour == 'BLACK':
+                # lost the line, store time the line search was initialised
+                print('Line search time init: {0}'.format(search_init_time))
+                search_init_time = time.time()
+
 
             #self.findcolour()
             print('\n\nRGB Colour: {0}  Light percent: {1}'.format(self.colour, self.percentage))
             print('Distance {0}\n'.format(self.distance))
             if self.colour == None:
                 print('Looking for the line (unspecified colour)')
+
             
-            if self.colour == 'BLACK':
-                print('Looking for the line')
-                rrb3.right(speed=0.2)
+            if self.colour == 'WHITE':
+                searchtime = time.time() - search_init_time
+                print('Looking for the line for {0} seconds'.format(searchtime))
+                if this_direction == 'left':
+                    rrb3.left(speed=0.2)
+                if this_direction == 'right':
+                    rrb3.right(speed=0.2)
+
+                # change search direction after 1, then 2, then 3 etc. seconds of searching
+                if searchtime > max_searchtime:
+                    max_searchtime += 1
+                    if this_direction == 'left':
+                        this_direction = 'right'
+                    else:
+                        this_direction = 'left'
                 
             if self.colour == 'BLACK':
                 print('Following the line')
                 rrb3.forward(speed=0.2)
+
+
+            last_colour = self.colour
 
 
 
