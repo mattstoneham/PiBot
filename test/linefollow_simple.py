@@ -79,7 +79,7 @@ class MyClass(object):
             elif newself.RGBvalues['red']>8000 and newself.RGBvalues['green']>8000 and newself.RGBvalues['blue']>8000:
                 newself.colour = 'WHITE'
                 #print("--WHITE--")
-            elif newself.RGBvalues['red']<2000 and newself.RGBvalues['green']<2000 and newself.RGBvalues['blue']<2000:
+            elif newself.RGBvalues['red']<8000 and newself.RGBvalues['green']<8000 and newself.RGBvalues['blue']<8000:
                 newself.colour = 'BLACK'
                 #print("--BLACK--")
 
@@ -110,16 +110,13 @@ class MyClass(object):
                 print('Looking for the line (unspecified colour)')
 
             if self.colour == 'BLACK':
-                print('Following line')
-                rrb3.set_motors(0.3, 0, 0.2, 0)
-                #print('Arc right')
-                #rrb3.set_motors(0.4, 0, 0.2, 0)
+                print('Arc right')
+                rrb3.arc(direction=0, l_speed=0.3, r_speed=0.15)
 
-            if self.colour == 'BLACK':
+            if self.colour == 'WHITE':
                 print('Searching for line')
-                rrb3.right(speed=0.2)
-                #print('Arc left')
-                #rrb3.set_motors(0.2, 0, 0.4, 0)
+                rrb3.right(speed=0.18)
+                rrb3.arc(direction=0, l_speed=0.15, r_speed=0.3)
 
 
 

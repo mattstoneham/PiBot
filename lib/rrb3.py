@@ -7,7 +7,7 @@ import time
 
 class RRB3:
 
-    LEFT_MOTOR_SCALE = 110
+    LEFT_MOTOR_SCALE = 108
     RIGHT_MOTOR_SCALE = 100
 
     MOTOR_DELAY = 0.2
@@ -93,6 +93,14 @@ class RRB3:
         l_speed = (speed / 100) * self.LEFT_MOTOR_SCALE
         r_speed = (speed / 100) * self.RIGHT_MOTOR_SCALE
         self.set_motors(l_speed, 0, r_speed, 0)
+        if seconds > 0:
+            time.sleep(seconds)
+            self.stop()
+
+    def arc(self, direction, l_speed, r_speed, seconds=0):
+        l_speed = (l_speed / 100) * self.LEFT_MOTOR_SCALE
+        r_speed = (r_speed / 100) * self.RIGHT_MOTOR_SCALE
+        self.set_motors(l_speed, direction, r_speed, direction)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
