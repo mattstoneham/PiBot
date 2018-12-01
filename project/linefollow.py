@@ -1,8 +1,5 @@
 __author__ = 'Matt'
 
-
-__author__ = 'Matt'
-
 import threading
 import time
 import sys
@@ -10,6 +7,8 @@ import signal
 
 from PiBot.lib.colour_sensor import ColourSensor
 from PiBot.lib.ultrasonic_sensor import UltraSonicSensor
+from PiBot.lib.rrb3 import *
+
 
 
 
@@ -18,8 +17,13 @@ class MyClass(object):
     exitFlag = 0
     threads = []
 
-    RGBsensor = {}
+    RGBvalues = {}
     distance = 0
+
+    maximum = 100
+    minimum = 9999
+    percentage = 0
+    colour = 'None'
 
     class SensorThread(threading.Thread):
         def __init__(self, name, threadID, sensortype, updatefreq=0.5):
@@ -48,8 +52,37 @@ class MyClass(object):
     def getRGBsensorvalue(self, newself, updatefreq):
         myColourSensor = ColourSensor()
         while not newself.exitFlag:
-            time.sleep(updatefreq)
-            newself.RGBsensor = myColourSensor.get_rgb_values()
+            time.sleep(0.1)
+            newself.RGBvalues = myColourSensor.get_rgb_values()
+            total = newself.RGBvalues['red'] + newself.RGBvalues['green'] + newself.RGBvalues['blue']
+            if total > newself.maximum:
+                print('Auto calibrated max intensity')
+                newself.maximum = total
+            if total < newself.minimum:
+                print('Auto calibrated min intensity')
+                newself.minimum = total
+            try:
+                newself.percentage = (100 / (newself.maximum - newself.minimum)) * (total - newself.minimum)
+            except:
+                pass # handle potential divide by zero on start
+            #print("Light percent: {0}".format(percentage))
+
+            if newself.RGBvalues['green']<3000 and newself.RGBvalues['blue']<4200 and newself.RGBvalues['red']>8000:
+                newself.colour = 'RED'
+                #print("--RED--")
+            elif newself.RGBvalues['red']<2200 and  newself.RGBvalues['blue']<2800 and newself.RGBvalues['green']>2900:#
+                newself.colour = 'GREEN'
+                #print("--GREEN--")
+            elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400:
+                newself.colour = 'BLUE'
+                #print("--BLUE--")
+            elif newself.RGBvalues['red']>8000 and newself.RGBvalues['green']>8000 and newself.RGBvalues['blue']>8000:
+                newself.colour = 'WHITE'
+                #print("--WHITE--")
+            elif newself.RGBvalues['red']<8000 and newself.RGBvalues['green']<8000 and newself.RGBvalues['blue']<8000:
+                newself.colour = 'BLACK'
+                #print("--BLACK--")
+
 
 
     def run(self):
@@ -67,12 +100,10 @@ class MyClass(object):
 
 
         while not self.exitFlag:
-
+            this_colour = self.colour
             # Control our bot based on sensor values here!
 
-            print('\nRGB {0}'.format(self.RGBsensor))
-            print('\nDistance {0}\n'.format(self.distance))
-            time.sleep(1)
+
 
 
 
@@ -82,14 +113,19 @@ class MyClass(object):
 
 if __name__ == '__main__':
     cl = MyClass()
+    rrb3 = RRB3()
 
-    def shutdown(sig, frame):
+    def shutdown(sig=None, frame=None):
         for thread in cl.threads:
-            print('Stopping thread: {0}'.format(thread))
             thread.exit()
-            print('\tdone!')
+        rrb3.stop()
         sys.exit(0)
 
 
     signal.signal(signal.SIGINT, shutdown)
-    cl.run()
+    try:
+        cl.run()
+    except Exception as e:
+        print(e)
+        print('Exception triggered, shutting down threads')
+        shutdown()
