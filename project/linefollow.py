@@ -76,10 +76,10 @@ class MyClass(object):
             elif newself.RGBvalues['green']<4000 and newself.RGBvalues['red']<2600 and newself.RGBvalues['blue']>8400:
                 newself.colour = 'BLUE'
                 #print("--BLUE--")
-            elif newself.RGBvalues['red']>8000 and newself.RGBvalues['green']>8000 and newself.RGBvalues['blue']>8000:
+            elif newself.RGBvalues['red']>10000 and newself.RGBvalues['green']>10000 and newself.RGBvalues['blue']>10000:
                 newself.colour = 'WHITE'
                 #print("--WHITE--")
-            elif newself.RGBvalues['red']<8000 and newself.RGBvalues['green']<8000 and newself.RGBvalues['blue']<8000:
+            elif newself.RGBvalues['red']<2000 and newself.RGBvalues['green']<2000 and newself.RGBvalues['blue']<2000:
                 newself.colour = 'BLACK'
                 #print("--BLACK--")
 
